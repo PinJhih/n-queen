@@ -2,13 +2,13 @@
 #include<stdlib.h>
 #include<stdbool.h>
 
-int n,count=0;
+int n,numOfAns=0,count=0;
 
 typedef struct Queen{
 	int x;
 	int y;
 } queen;
-queen queens[100];
+queen queens[16],answers[1000][16];
 
 void init(){
 	for(int i=0;i!=n;i++){
@@ -29,20 +29,35 @@ bool checkRow(int index,int position){
 }
 
 void printAns(){
-	count++;
-	printf("\n第%d個\n",count);
-	for(int i=0;i!=n;i++){
-		for(int j=0;j!=n;j++)
-			if(j==queens[i].y)
-				printf("Q");
-			else
-				printf("X");
+	for(int i=0;i!=numOfAns;i++){
+		printf("第%d次\n",i+1);
+		for(int j=0;j!=n;j++){
+			for(int k=0;k!=n;k++){
+				if(k==answers[i][j].y)
+					printf("Q");
+				else
+					printf("X");
+			}
+			puts("");
+		}
 		puts("");
 	}
 }
 
+void saveAns(){
+	for(int i=0;i!=n;i++){
+		answers[numOfAns][i].x=queens[i].x;
+		answers[numOfAns][i].y=queens[i].y;
+	}
+	numOfAns++;
+}
+
 void checkAns(){
 	bool isRight=true;
+	count++;
+	system("cls");
+	printf("第%d次 已發現%d個答案\n",count,numOfAns);
+	
 	for(int i=0;i!=n && isRight;i++){
 		for(int x=queens[i].x+1,y=queens[i].y+1;x!=n && y!=n; x++,y++)
 		
@@ -77,7 +92,7 @@ void checkAns(){
 	}
 
 	if(isRight)
-		printAns();
+		saveAns();
 }
 
 void getPosition(int index){
@@ -98,5 +113,6 @@ void main(){
 	scanf("%d",&n);
 	init();
 	getPosition(0);
+	printAns();
 	system("pause");
 } 
