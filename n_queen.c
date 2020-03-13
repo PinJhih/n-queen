@@ -30,7 +30,7 @@ bool checkRow(int index,int position){
 
 void printAns(){
 	count++;
-	printf("第%d個\n",count);
+	printf("\n第%d個\n",count);
 	for(int i=0;i!=n;i++){
 		for(int j=0;j!=n;j++)
 			if(j==queens[i].y)
@@ -81,17 +81,18 @@ void checkAns(){
 }
 
 void getPosition(int index){
-	for(int i=0;i!=n;i++){
+	int num=0;
+	for(int i=0;num!=n-index;i++){
 		if(!checkRow(index,i)){
 			queens[index].y=i;
 			if(index==n-1)
 				checkAns();
 			else
 				getPosition(index+1);
+			num++;
 		}
 	}
 }
-
 
 void main(){
 	scanf("%d",&n);
